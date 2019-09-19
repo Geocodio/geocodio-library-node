@@ -32,7 +32,7 @@
     "prettier": "^1.18.2"
   },
   "engines": {
-    "npm": ">= 4.0.0"
+    "npm": ">= 8.0.0"
   },
   "lint-staged": {
     "*.js": [
@@ -64,7 +64,8 @@
   "scripts": {
     "pretest": "eslint .",
     "fix": "eslint . --fix",
-    "test": "jest"
+    "test": "jest",
+    "toc": "markdown-toc README.md -i"
   },
   "repository": "Geocodio/geocodio-library-node",
   "jest": {
