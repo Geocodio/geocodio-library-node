@@ -2,7 +2,11 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
-## 1.1.0 - 2020-05-14
+## 1.2.1 - 2020-05-14
+
+- Updated npm dependencies
+
+## 1.2.0 - 2020-05-14
 
 - Added support for Geocodio API v1.5
 
