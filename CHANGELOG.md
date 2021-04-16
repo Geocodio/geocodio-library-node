@@ -2,6 +2,14 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 1.3.2 - 2021-04-16
+
+- Updated dependencies and fixed package.json configuration error
+
+## 1.3.1 - 2021-01-05
+
+- Updated dependencies
+
 ## 1.3.0 - 2020-06-03
 
 - Added support for Geocodio API v1.6
