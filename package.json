@@ -32,7 +32,7 @@
     "prettier": "^1.19.1"
   },
   "engines": {
-    "npm": ">= 8.0.0"
+    "node": ">= 8.0.0"
   },
   "lint-staged": {
     "*.js": [
