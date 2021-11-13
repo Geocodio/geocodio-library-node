@@ -1,4 +1,4 @@
-# geocod.io Node library [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# geocod.io Node library [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 > Library for performing forward and reverse address geocoding for addresses or coordinates in the US and Canada.
 
 <!-- toc -->
@@ -247,5 +247,3 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [npm-url]: https://npmjs.org/package/geocodio-library-node
 [travis-image]: https://travis-ci.org/Geocodio/geocodio-library-node.svg?branch=master
 [travis-url]: https://travis-ci.org/Geocodio/geocodio-library-node
-[daviddm-image]: https://david-dm.org/Geocodio/geocodio-library-node.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/Geocodio/geocodio-library-node
