@@ -230,6 +230,24 @@ geocoder.reverse('38.9002898,-76.9990361', ['timezone'], 5)
 
 List methods are nested within `.list`. To access list methods, be sure to to run `geocoder.list` and then include the task method you would like to utilize. 
 
+#### Create A List
+
+To create and upload a new list using an existing .CSV file, run `geocoder.list.create(...)` and pass in your filename/file path.
+
+You may also need to pass in some additional parameters:
+* Direction: Use the default string `"forward"`.
+* Format: Use the default string `"{{A}} {{B}} {{C}} {{D}}"`
+* Callback: A callback URL. 
+
+```javascript
+geocoder.list.create(
+  `${__dirname}/stubs/sample_list.csv`,
+  "forward",
+  "{{A}} {{B}} {{C}} {{D}}",
+  "https://example.com/my-callback"
+)
+```
+
 #### Get List Status
 
 To retrieve the current status of your list, pass your list's ID into `geocoder.list.status(...)`. 
