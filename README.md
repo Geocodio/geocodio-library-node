@@ -10,6 +10,12 @@
   * [Field appends](#field-appends)
   * [Address components](#address-components)
   * [Limit results](#limit-results)
+  * [Lists](#lists)
+     * [Create A List](#create-a-list)
+     * [Get List Status](#get-list-status)
+     * [Get All Lists](#get-all-lists)
+     * [Download A List](#download-a-list)
+     * [Delete A List](#delete-a-list)
 - [Testing](#testing)
 - [Changelog](#changelog)
 - [Security](#security)
@@ -221,6 +227,68 @@ geocoder.geocode('1109 N Highland St, Arlington, VA', [], 1)
 
 // Return up to 5 geocoding results
 geocoder.reverse('38.9002898,-76.9990361', ['timezone'], 5)
+  .then(response => { ... })
+  .catch(err => { ... });
+```
+
+### Lists
+
+List methods are nested within `.list`. To access list methods, be sure to to run `geocoder.list` and then include the task method you would like to utilize. 
+
+#### Create A List
+
+To create and upload a new list using an existing .CSV file, run `geocoder.list.create(...)` and pass in your filename/file path.
+
+You may also need to pass in some additional parameters:
+* Direction: Use the default string `"forward"`.
+* Format: Use the default string `"{{A}} {{B}} {{C}} {{D}}"`
+* Callback: A callback URL. 
+
+```javascript
+geocoder.list.create(
+  `${__dirname}/stubs/sample_list.csv`,
+  "forward",
+  "{{A}} {{B}} {{C}} {{D}}",
+  "https://example.com/my-callback"
+)
+```
+
+#### Get List Status
+
+To retrieve the current status of your list, pass your list's ID into `geocoder.list.status(...)`. 
+
+```javascript
+geocoder.list.status(1234567)
+  .then(response => { ... })
+  .catch(err => { ... });
+```
+
+#### Get All Lists
+
+To retrieve all available lists, run `geocoder.list.all()`. You do not need to pass anything into this function. 
+
+```javascript
+geocoder.list.all()
+  .then(response => { ... })
+  .catch(err => { ... });
+```
+
+#### Download A List
+
+To download a list, run `geocoder.list.download(...)` and pass in the ID of the list you'd like to download, as well as a string that includes a filename. Be sure to include a `.csv` file extension. 
+
+```javascript
+geocoder.list.download(1234567, "geocoded_file.csv")
+   .then(response => { ...})
+   .catch(err => { ... });
+```
+
+#### Delete A List
+
+To delete a list, run `geocoder.list.deleteList(...)` and pass in the ID of the list you'd like to delete. 
+
+```javascript
+geocoder.list.download(1234567)
   .then(response => { ... })
   .catch(err => { ... });
 ```
