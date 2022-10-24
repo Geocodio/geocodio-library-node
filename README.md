@@ -288,7 +288,7 @@ geocoder.list.download(1234567, "geocoded_file.csv")
 To delete a list, run `geocoder.list.deleteList(...)` and pass in the ID of the list you'd like to delete. 
 
 ```javascript
-geocoder.list.download(1234567)
+geocoder.list.delete(1234567)
   .then(response => { ... })
   .catch(err => { ... });
 ```
