@@ -2,6 +2,18 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 1.6.1 - 2024-03-04
+
+- **Fix:** Axios `require` error with some Node versions
+
+## 1.6.0 - 2024-02-07
+
+- Updated npm depencies
+
+## 1.5.0 - 2022-10-24
+
+- Added support for [Lists API](https://www.geocod.io/docs/#geocoding-lists)
+
 ## 1.4.0 - 2021-11-13
 
 - Added support for Geocodio API v1.7
@@ -29,7 +41,7 @@ All notable changes to `geocodio-library-node` will be documented in this file
 
 ## 1.1.0 - 2020-02-24
 
-**Fix:** Fixed issue where batch requests did not allow custom keys
+- **Fix:** Fixed issue where batch requests did not allow custom keys
 
 ## 1.0.0 - 2019-09-19
 
