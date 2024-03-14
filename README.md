@@ -311,5 +311,5 @@ If you discover any security related issues, please email security@geocod.io ins
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[npm-image]: https://badge.fury.io/js/geocodio-library-node.svg
+[npm-image]: https://img.shields.io/npm/v/geocodio-library-node
 [npm-url]: https://npmjs.org/package/geocodio-library-node
