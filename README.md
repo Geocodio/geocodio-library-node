@@ -41,7 +41,7 @@ $ yarn add geocodio-library-node
 ```javascript
 const Geocodio = require('geocodio-library-node');
 const geocoder = new Geocodio('YOUR_API_KEY');
-// const geocoder = new Geocodio('YOUR_API_KEY', 'api-hipaa.geocod.io'); // optionally overwrite the API hostname
+// const geocoder = new Geocodio('YOUR_API_KEY', 'api.enterprise.geocod.io'); // optionally overwrite the API hostname
 
 geocoder
   .geocode('1109 N Highland St, Arlington, VA')
