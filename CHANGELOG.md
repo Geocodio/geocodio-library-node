@@ -2,6 +2,10 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 1.7.0 - 2025-02-25
+
+- Added typescript definitions thanks to contribution by [Adrastopoulos](https://github.com/Geocodio/geocodio-library-node/pull/39)
+
 ## 1.6.1 - 2024-03-04
 
 - **Fix:** Axios `require` error with some Node versions
