@@ -2,6 +2,12 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 1.8.0 - 2025-03-06
+
+- feat(ci): Add GH Actions by @sixlive in https://github.com/Geocodio/geocodio-library-node/pull/41
+- feat(auth): Use Authorization header for auth by @sixlive in https://github.com/Geocodio/geocodio-library-node/pull/40
+- chore(deps): Bump axios from 1.6.7 to 1.7.4 by @dependabot in https://github.com/Geocodio/geocodio-library-node/pull/42
+
 ## 1.7.0 - 2025-02-25
 
 - Added typescript definitions thanks to contribution by [Adrastopoulos](https://github.com/Geocodio/geocodio-library-node/pull/39)
