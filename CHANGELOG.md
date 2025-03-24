@@ -2,7 +2,7 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
-## 1.9.0 - 2025-03-06
+## 1.9.1 - 2025-03-06
 
 - Updated typescript definitions thanks to contribution by [Adrastopoulos](https://github.com/Geocodio/geocodio-library-node/pull/43)
 - Bumped `jest` from 26.6.3 to 29.7.0
