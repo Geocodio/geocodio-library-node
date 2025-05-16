@@ -17,6 +17,8 @@ declare module 'geocodio-library-node' {
     postal_code?: string; // Alternative to zip used in some API calls
   }
 
+  export type AddressInputComponents = Pick<AddressComponents, "street" | "city" | "county" | "state" | "postal_code" | "country">
+
   export type GeocodeAccuracyType =
     | 'rooftop'
     | 'point'
@@ -259,8 +261,8 @@ declare module 'geocodio-library-node' {
   export default class Geocodio {
     constructor(apiKey?: string, hostname?: string, apiVersion?: string);
 
-    geocode(query: string | AddressComponents, fields?: FieldOption[], limit?: number): Promise<SingleGeocodeResponse>;
-    geocode(query: (string | AddressComponents)[] | Record<string, string | AddressComponents>, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse>;
+    geocode(query: string | AddressInputComponents, fields?: FieldOption[], limit?: number): Promise<SingleGeocodeResponse>;
+    geocode(query: (string | AddressInputComponents)[] | Record<string, string | AddressInputComponents>, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse>;
 
     reverse(query: string | [number, number], fields?: FieldOption[], limit?: number): Promise<ReverseGeocodeResponse>;
     reverse(query: (string | [number, number])[] | Record<string, string | [number, number]>, fields?: FieldOption[], limit?: number): Promise<BatchReverseGeocodeResponse>;
