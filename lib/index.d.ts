@@ -228,9 +228,9 @@ declare module 'geocodio-library-node' {
     results: GeocodedAddress[];
   }
 
-  export interface BatchGeocodeResponse {
+  export interface BatchGeocodeResponse<Q extends string | AddressInputComponents> {
     results: Array<{
-      query: string;
+      query: Q;
       response: SingleGeocodeResponse;
     }> | Record<string, {
       response: SingleGeocodeResponse;
@@ -262,7 +262,7 @@ declare module 'geocodio-library-node' {
     constructor(apiKey?: string, hostname?: string, apiVersion?: string);
 
     geocode(query: string | AddressInputComponents, fields?: FieldOption[], limit?: number): Promise<SingleGeocodeResponse>;
-    geocode(query: (string | AddressInputComponents)[] | Record<string, string | AddressInputComponents>, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse>;
+    geocode<Q extends string | AddressInputComponents>(query: Q[] | Record<string, Q>, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse<Q>>;
 
     reverse(query: string | [number, number], fields?: FieldOption[], limit?: number): Promise<ReverseGeocodeResponse>;
     reverse(query: (string | [number, number])[] | Record<string, string | [number, number]>, fields?: FieldOption[], limit?: number): Promise<BatchReverseGeocodeResponse>;
