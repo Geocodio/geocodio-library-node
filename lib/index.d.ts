@@ -228,11 +228,11 @@ declare module 'geocodio-library-node' {
     results: GeocodedAddress[];
   }
 
-  export interface BatchGeocodeResponse<Q extends string | AddressInputComponents> {
-    results: Array<{
+  export interface BatchGeocodeResponse<Q extends string | AddressInputComponents, T extends Array<Q> | Record<string, Q>> {
+    results: T extends Array<Q> ? Array<{
       query: Q;
       response: SingleGeocodeResponse;
-    }> | Record<string, {
+    }> : Record<string, {
       response: SingleGeocodeResponse;
     }>;
   }
@@ -241,11 +241,11 @@ declare module 'geocodio-library-node' {
     results: GeocodedAddress[];
   }
 
-  export interface BatchReverseGeocodeResponse {
-    results: Array<{
-      query: string;
+  export interface BatchReverseGeocodeResponse<Q extends string | [number, number], T extends Array<Q> | Record<string, Q>> {
+    results: T extends Array<Q> ? Array<{
+      query: Q;
       response: ReverseGeocodeResponse;
-    }> | Record<string, {
+    }> : Record<string, {
       response: ReverseGeocodeResponse;
     }>;
   }
@@ -262,10 +262,10 @@ declare module 'geocodio-library-node' {
     constructor(apiKey?: string, hostname?: string, apiVersion?: string);
 
     geocode(query: string | AddressInputComponents, fields?: FieldOption[], limit?: number): Promise<SingleGeocodeResponse>;
-    geocode<Q extends string | AddressInputComponents>(query: Q[] | Record<string, Q>, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse<Q>>;
+    geocode<Q extends string | AddressInputComponents, T extends Array<Q> | Record<string, Q>>(query: T, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse<Q, T>>;
 
     reverse(query: string | [number, number], fields?: FieldOption[], limit?: number): Promise<ReverseGeocodeResponse>;
-    reverse(query: (string | [number, number])[] | Record<string, string | [number, number]>, fields?: FieldOption[], limit?: number): Promise<BatchReverseGeocodeResponse>;
+    reverse<Q extends string | [number, number], T extends Array<Q> | Record<string, Q>>(query: T, fields?: FieldOption[], limit?: number): Promise<BatchReverseGeocodeResponse<Q, T>>;
 
     list: {
       create(filename: string, direction: string, format: string, callback: string): Promise<ListResponse>;
