@@ -2,6 +2,11 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 1.11.0 - 2025-05-21
+
+- Enhanced TypeScript type definitions
+- Fixed input type constraints to match expected properties
+
 ## 1.10.0 - 2025-05-20
 
 - Added support for Geocodio API v1.8
