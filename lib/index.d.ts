@@ -192,13 +192,16 @@ declare module 'geocodio-library-node' {
 
   export type FieldOption =
     | 'cd'
-    | 'cd116'
-    | 'cd115'
-    | 'cd114'
     | 'cd113'
+    | 'cd114'
+    | 'cd115'
+    | 'cd116'
+    | 'cd117'
+    | 'cd118'
+    | 'cd119'
     | 'stateleg'
+    | 'stateleg-next'
     | 'school'
-    | 'timezone'
     | 'census'
     | 'census2000'
     | 'census2010'
@@ -212,15 +215,22 @@ declare module 'geocodio-library-node' {
     | 'census2018'
     | 'census2019'
     | 'census2020'
+    | 'census2021'
+    | 'census2022'
+    | 'census2023'
     | 'census2024'
-    | 'provriding'
-    | 'riding'
-    | 'zip4'
     | 'acs-demographics'
     | 'acs-economics'
     | 'acs-families'
     | 'acs-housing'
-    | 'acs-social';
+    | 'acs-social'
+    | 'zip4'
+    | 'ffiec'
+    | 'riding'
+    | 'provriding'
+    | 'provriding-next'
+    | 'statcan'
+    | 'timezone';
 
   export interface SingleGeocodeResponse {
     input: {
