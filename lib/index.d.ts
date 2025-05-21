@@ -265,7 +265,6 @@ declare module 'geocodio-library-node' {
 
     geocode(query: string | AddressInputComponents, fields?: FieldOption[], limit?: number): Promise<SingleGeocodeResponse>;
     geocode<Q extends string | AddressInputComponents, T extends Array<Q> | Record<string, Q>>(query: T, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse<Q, T>>;
-
     reverse(query: string | [number, number], fields?: FieldOption[], limit?: number): Promise<ReverseGeocodeResponse>;
     reverse<Q extends string | [number, number], T extends Array<Q> | Record<string, Q>>(query: T, fields?: FieldOption[], limit?: number): Promise<BatchReverseGeocodeResponse<Q, T>>;
 
