@@ -226,6 +226,7 @@ declare module 'geocodio-library-node' {
       formatted_address: string;
     };
     results: GeocodedAddress[];
+    _warnings?: string[];
   }
 
   export interface BatchGeocodeResponse<Q extends string | AddressInputComponents, T extends Array<Q> | Record<string, Q>> {
@@ -239,6 +240,7 @@ declare module 'geocodio-library-node' {
 
   export interface ReverseGeocodeResponse {
     results: GeocodedAddress[];
+    _warnings?: string[];
   }
 
   export interface BatchReverseGeocodeResponse<Q extends string | [number, number], T extends Array<Q> | Record<string, Q>> {
