@@ -233,7 +233,7 @@ declare module 'geocodio-library-node' {
     results: T extends Array<Q> ? Array<{
       query: Q;
       response: SingleGeocodeResponse;
-    }> : Record<string, {
+    }> : Record<keyof T, {
       response: SingleGeocodeResponse;
     }>;
   }
@@ -247,7 +247,7 @@ declare module 'geocodio-library-node' {
     results: T extends Array<Q> ? Array<{
       query: Q;
       response: ReverseGeocodeResponse;
-    }> : Record<string, {
+    }> : Record<keyof T, {
       response: ReverseGeocodeResponse;
     }>;
   }
