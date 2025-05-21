@@ -181,6 +181,7 @@ declare module 'geocodio-library-node' {
 
   export interface GeocodedAddress {
     address_components: AddressComponents;
+    address_lines: string[];
     formatted_address: string;
     location: Location;
     accuracy: number;
