@@ -212,6 +212,7 @@ declare module 'geocodio-library-node' {
     | 'census2018'
     | 'census2019'
     | 'census2020'
+    | 'census2024'
     | 'provriding'
     | 'riding'
     | 'zip4'
