@@ -234,6 +234,7 @@ declare module 'geocodio-library-node' {
       query: Q;
       response: SingleGeocodeResponse;
     }> : Record<keyof T, {
+      query: Q;
       response: SingleGeocodeResponse;
     }>;
   }
@@ -248,6 +249,7 @@ declare module 'geocodio-library-node' {
       query: Q;
       response: ReverseGeocodeResponse;
     }> : Record<keyof T, {
+      query: Q;
       response: ReverseGeocodeResponse;
     }>;
   }
