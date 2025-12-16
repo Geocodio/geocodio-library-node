@@ -1,4 +1,176 @@
 declare module 'geocodio-library-node' {
+  // Distance API Enums
+  export enum DistanceMode {
+    Straightline = 'straightline',
+    Driving = 'driving',
+    Haversine = 'haversine'  // Alias for straightline (backward compat)
+  }
+
+  export enum DistanceUnits {
+    Miles = 'miles',
+    Kilometers = 'km',
+    Km = 'km'  // Alias
+  }
+
+  export enum DistanceOrderBy {
+    Distance = 'distance',
+    Duration = 'duration'
+  }
+
+  export enum DistanceSortOrder {
+    Asc = 'asc',
+    Desc = 'desc'
+  }
+
+  // Coordinate class for distance calculations
+  export class Coordinate {
+    readonly lat: number;
+    readonly lng: number;
+    readonly id?: string;
+
+    constructor(lat: number, lng: number, id?: string);
+
+    static from(input: CoordinateInput): Coordinate;
+    static fromString(input: string): Coordinate;
+    static fromArray(input: [number, number] | [number, number, string]): Coordinate;
+
+    toString(): string;
+    toObject(): { lat: number; lng: number; id?: string };
+  }
+
+  // Coordinate input types (accept multiple formats)
+  export type CoordinateInput =
+    | Coordinate
+    | string                           // "lat,lng" or "lat,lng,id"
+    | [number, number]                 // [lat, lng]
+    | [number, number, string]         // [lat, lng, id]
+    | { lat: number; lng: number; id?: string };
+
+  // Distance API Response Types
+  export interface DistanceDestination {
+    query: string;
+    location: [number, number];
+    id?: string;
+    distance_miles: number;
+    distance_km: number;
+    duration_seconds?: number;  // Only with driving mode
+  }
+
+  export interface DistanceOrigin {
+    query: string;
+    location: [number, number];
+    id?: string;
+  }
+
+  export interface DistanceResponse {
+    origin: DistanceOrigin;
+    mode: string;
+    destinations: DistanceDestination[];
+  }
+
+  export interface DistanceMatrixResult {
+    origin: DistanceOrigin;
+    destinations: DistanceDestination[];
+  }
+
+  export interface DistanceMatrixResponse {
+    mode: string;
+    results: DistanceMatrixResult[];
+  }
+
+  // Distance options
+  export interface DistanceOptions {
+    mode?: DistanceMode | 'straightline' | 'driving' | 'haversine';
+    units?: DistanceUnits | 'miles' | 'kilometers';
+    maxResults?: number;
+    maxDistance?: number;
+    maxDuration?: number;
+    minDistance?: number;
+    minDuration?: number;
+    orderBy?: DistanceOrderBy | 'distance' | 'duration';
+    sortOrder?: DistanceSortOrder | 'asc' | 'desc';
+  }
+
+  // Distance Job Types
+  export interface DistanceJobResponse {
+    id: number;
+    identifier: string;
+    status: 'ENQUEUED' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
+    name: string;
+    created_at: string;
+    origins_count: number;
+    destinations_count: number;
+    total_calculations: number;
+  }
+
+  export interface DistanceJobStatusResponse {
+    data: {
+      id: number;
+      identifier: string;
+      name: string;
+      status: 'ENQUEUED' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
+      progress: number;
+      download_url?: string;
+      total_calculations: number;
+      calculations_completed: number;
+    };
+  }
+
+  export interface DistanceJobsListResponse {
+    current_page: number;
+    data: Array<{
+      id: number;
+      identifier: string;
+      name: string;
+      status: 'ENQUEUED' | 'PROCESSING' | 'COMPLETED' | 'FAILED';
+      progress: number;
+      total_calculations: number;
+      calculations_completed: number;
+      created_at: string;
+    }>;
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+  }
+
+  export interface DistanceJobOptions extends DistanceOptions {
+    callbackUrl?: string;
+  }
+
+  // Geocode with distance options
+  export interface GeocodeDistanceOptions {
+    destinations?: CoordinateInput[];
+    distanceMode?: DistanceMode | 'straightline' | 'driving' | 'haversine';
+    distanceUnits?: DistanceUnits | 'miles' | 'kilometers';
+    distanceMaxResults?: number;
+    distanceMaxDistance?: number;
+    distanceMaxDuration?: number;
+    distanceMinDistance?: number;
+    distanceMinDuration?: number;
+    distanceOrderBy?: DistanceOrderBy | 'distance' | 'duration';
+    distanceSortOrder?: DistanceSortOrder | 'asc' | 'desc';
+  }
+
+  // Enhanced geocoded address with distance info
+  export interface GeocodedAddressWithDistance extends GeocodedAddress {
+    destinations?: DistanceDestination[];
+  }
+
+  export interface SingleGeocodeResponseWithDistance extends SingleGeocodeResponse {
+    results: GeocodedAddressWithDistance[];
+  }
+
+  export interface ReverseGeocodeResponseWithDistance extends ReverseGeocodeResponse {
+    results: GeocodedAddressWithDistance[];
+  }
+
   export interface AddressComponents {
     number?: string;
     predirectional?: string;
@@ -263,11 +435,63 @@ declare module 'geocodio-library-node' {
   export default class Geocodio {
     constructor(apiKey?: string, hostname?: string, apiVersion?: string);
 
+    // Geocoding methods
     geocode(query: string | AddressInputComponents, fields?: FieldOption[], limit?: number): Promise<SingleGeocodeResponse>;
     geocode<Q extends string | AddressInputComponents, T extends Array<Q> | Record<string, Q>>(query: T, fields?: FieldOption[], limit?: number): Promise<BatchGeocodeResponse<Q, T>>;
+
+    // Geocode with distance
+    geocode(
+      query: string | AddressInputComponents,
+      fields?: FieldOption[],
+      limit?: number,
+      distanceOptions?: GeocodeDistanceOptions
+    ): Promise<SingleGeocodeResponseWithDistance>;
+
+    // Reverse geocoding methods
     reverse(query: string | [number, number], fields?: FieldOption[], limit?: number): Promise<ReverseGeocodeResponse>;
     reverse<Q extends string | [number, number], T extends Array<Q> | Record<string, Q>>(query: T, fields?: FieldOption[], limit?: number): Promise<BatchReverseGeocodeResponse<Q, T>>;
 
+    // Reverse with distance
+    reverse(
+      query: string | [number, number],
+      fields?: FieldOption[],
+      limit?: number,
+      distanceOptions?: GeocodeDistanceOptions
+    ): Promise<ReverseGeocodeResponseWithDistance>;
+
+    // Distance API - Single origin to multiple destinations (GET)
+    distance(
+      origin: CoordinateInput,
+      destinations: CoordinateInput[],
+      options?: DistanceOptions
+    ): Promise<DistanceResponse>;
+
+    // Distance Matrix API - Multiple origins × destinations (POST)
+    distanceMatrix(
+      origins: CoordinateInput[],
+      destinations: CoordinateInput[],
+      options?: DistanceOptions
+    ): Promise<DistanceMatrixResponse>;
+
+    // Async Distance Matrix Job methods
+    createDistanceMatrixJob(
+      name: string,
+      origins: CoordinateInput[] | number,  // Array or list ID
+      destinations: CoordinateInput[] | number,
+      options?: DistanceJobOptions
+    ): Promise<DistanceJobResponse>;
+
+    distanceMatrixJobStatus(id: string | number): Promise<DistanceJobStatusResponse>;
+
+    distanceMatrixJobs(page?: number): Promise<DistanceJobsListResponse>;
+
+    getDistanceMatrixJobResults(id: string | number): Promise<DistanceMatrixResponse>;
+
+    downloadDistanceMatrixJob(id: string | number, filePath: string): Promise<void>;
+
+    deleteDistanceMatrixJob(id: string | number): Promise<void>;
+
+    // List API
     list: {
       create(filename: string, direction: string, format: string, callback: string): Promise<ListResponse>;
       status(listId: number): Promise<unknown>;
