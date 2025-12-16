@@ -1,5 +1,5 @@
 # geocod.io Node library [![NPM version][npm-image]][npm-url]
-> Library for performing forward and reverse address geocoding for addresses or coordinates in the US and Canada.
+> Library for performing forward and reverse address geocoding for addresses or coordinates in the US and Canada, with support for distance calculations.
 
 <!-- toc -->
 
@@ -10,6 +10,10 @@
   * [Field appends](#field-appends)
   * [Address components](#address-components)
   * [Limit results](#limit-results)
+  * [Distance calculation](#distance-calculation)
+  * [Distance matrix](#distance-matrix)
+  * [Async distance jobs](#async-distance-jobs)
+  * [Geocoding with distance](#geocoding-with-distance)
   * [Lists](#lists)
      * [Create A List](#create-a-list)
      * [Get List Status](#get-list-status)
@@ -229,6 +233,179 @@ geocoder.geocode('1109 N Highland St, Arlington, VA', [], 1)
 geocoder.reverse('38.9002898,-76.9990361', ['timezone'], 5)
   .then(response => { ... })
   .catch(err => { ... });
+```
+
+### Distance calculation
+
+Calculate distances from a single origin to multiple destinations. You can use the `Coordinate` class or pass coordinates as strings, arrays, or objects.
+
+```javascript
+const { Geocodio, Coordinate, DistanceMode, DistanceUnits } = require('geocodio-library-node');
+const geocoder = new Geocodio('YOUR_API_KEY');
+
+// Using string format "lat,lng" or "lat,lng,id"
+geocoder.distance(
+    '38.8977,-77.0365,white_house',
+    ['38.8899,-77.0091,capitol', '38.8895,-77.0353,monument']
+  )
+  .then(response => {
+    console.log(response);
+    /*
+    {
+      "origin": { "location": [38.8977, -77.0365], "id": "white_house" },
+      "mode": "driving",
+      "destinations": [
+        { "id": "capitol", "distance_miles": 2.1, "distance_km": 3.4, "duration_seconds": 377 },
+        { "id": "monument", "distance_miles": 1.5, "distance_km": 2.4, "duration_seconds": 280 }
+      ]
+    }
+    */
+  })
+  .catch(err => { ... });
+
+// Using Coordinate class
+const origin = new Coordinate(38.8977, -77.0365, 'white_house');
+const destinations = [
+  new Coordinate(38.8899, -77.0091, 'capitol'),
+  new Coordinate(38.8895, -77.0353, 'monument')
+];
+
+geocoder.distance(origin, destinations, {
+    mode: DistanceMode.Driving,
+    units: DistanceUnits.Kilometers
+  })
+  .then(response => { ... })
+  .catch(err => { ... });
+
+// Using array format [lat, lng] or [lat, lng, id]
+geocoder.distance(
+    [38.8977, -77.0365, 'origin'],
+    [[38.8899, -77.0091, 'dest1'], [38.8895, -77.0353, 'dest2']]
+  )
+  .then(response => { ... })
+  .catch(err => { ... });
+```
+
+Available options:
+- `mode`: `DistanceMode.Driving`, `DistanceMode.Straightline`, or `DistanceMode.Haversine`
+- `units`: `DistanceUnits.Miles` or `DistanceUnits.Kilometers`
+- `maxResults`: Limit number of results
+- `maxDistance`: Filter by maximum distance
+- `minDistance`: Filter by minimum distance
+- `maxDuration`: Filter by maximum duration (driving mode only)
+- `minDuration`: Filter by minimum duration (driving mode only)
+- `orderBy`: `DistanceOrderBy.Distance` or `DistanceOrderBy.Duration`
+- `sortOrder`: `DistanceSortOrder.Asc` or `DistanceSortOrder.Desc`
+
+### Distance matrix
+
+Calculate distances from multiple origins to multiple destinations.
+
+```javascript
+const origins = [
+  { lat: 38.8977, lng: -77.0365, id: 'white_house' },
+  { lat: 38.8899, lng: -77.0091, id: 'capitol' }
+];
+
+const destinations = [
+  { lat: 38.8895, lng: -77.0353, id: 'monument' },
+  { lat: 38.9072, lng: -77.0369, id: 'dupont' }
+];
+
+geocoder.distanceMatrix(origins, destinations, { mode: DistanceMode.Driving })
+  .then(response => {
+    console.log(response);
+    /*
+    {
+      "mode": "driving",
+      "results": [
+        {
+          "origin": { "id": "white_house", "location": [38.8977, -77.0365] },
+          "destinations": [
+            { "id": "monument", "distance_miles": 1.5, "duration_seconds": 280 },
+            { "id": "dupont", "distance_miles": 1.2, "duration_seconds": 245 }
+          ]
+        },
+        {
+          "origin": { "id": "capitol", "location": [38.8899, -77.0091] },
+          "destinations": [...]
+        }
+      ]
+    }
+    */
+  })
+  .catch(err => { ... });
+```
+
+### Async distance jobs
+
+For large distance calculations, use async jobs that process in the background.
+
+```javascript
+// Create a job
+geocoder.createDistanceMatrixJob(
+    'My Distance Job',
+    origins,
+    destinations,
+    { mode: DistanceMode.Driving, callbackUrl: 'https://example.com/webhook' }
+  )
+  .then(response => {
+    console.log(response);
+    // { id: 123, status: 'ENQUEUED', total_calculations: 4 }
+  });
+
+// Check job status
+geocoder.distanceMatrixJobStatus(123)
+  .then(response => {
+    console.log(response.data.status); // 'ENQUEUED', 'PROCESSING', 'COMPLETED', or 'FAILED'
+    console.log(response.data.progress); // 0-100
+  });
+
+// List all jobs
+geocoder.distanceMatrixJobs()
+  .then(response => { ... });
+
+// Get results when complete
+geocoder.getDistanceMatrixJobResults(123)
+  .then(response => { ... });
+
+// Or download to a file
+geocoder.downloadDistanceMatrixJob(123, 'results.json')
+  .then(() => console.log('Downloaded!'));
+
+// Delete a job
+geocoder.deleteDistanceMatrixJob(123)
+  .then(() => console.log('Deleted!'));
+```
+
+### Geocoding with distance
+
+You can add distance calculations to geocode and reverse geocode requests.
+
+```javascript
+// Geocode with distance to destinations
+geocoder.geocode(
+    '1600 Pennsylvania Ave NW, Washington DC',
+    [],    // fields
+    null,  // limit
+    { destinations: ['38.8899,-77.0091,capitol'] }
+  )
+  .then(response => {
+    // Each result will include a destinations array with distances
+    console.log(response.results[0].destinations);
+  });
+
+// Reverse geocode with distance
+geocoder.reverse(
+    '38.8977,-77.0365',
+    [],
+    null,
+    {
+      destinations: ['38.8899,-77.0091,capitol'],
+      distanceMode: DistanceMode.Driving
+    }
+  )
+  .then(response => { ... });
 ```
 
 ### Lists
