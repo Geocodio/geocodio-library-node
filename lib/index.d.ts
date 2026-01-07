@@ -302,14 +302,22 @@ declare module 'geocodio-library-node' {
     census_year: number;
     state_fips: string;
     county_fips: string;
-    place_fips: string;
     tract_code: string;
     block_code: string;
     block_group: string;
     full_fips: string;
+    place: { name: string; fips: string; }
     metro_micro_statistical_area?: MetroArea;
     combined_statistical_area?: StatisticalArea;
     metropolitan_division?: StatisticalArea;
+    county_subdivision: {
+      name: string;
+      fips: string;
+      fips_class: {
+        class_code: string;
+        description: string;
+      }
+    }
     source: string;
   }
 
@@ -346,13 +354,16 @@ declare module 'geocodio-library-node' {
     state_legislative_districts?: StateLegislativeDistricts;
     school_districts?: SchoolDistricts;
     timezone?: Timezone;
-    census?: Census;
+    census?: {
+      [key: string]: Census;
+    }
     zip4?: Zip4;
     [key: string]: unknown;
   }
 
   export interface GeocodedAddress {
     address_components: AddressComponents;
+    address_lines: string[];
     formatted_address: string;
     location: Location;
     accuracy: number;
@@ -363,13 +374,16 @@ declare module 'geocodio-library-node' {
 
   export type FieldOption =
     | 'cd'
-    | 'cd116'
-    | 'cd115'
-    | 'cd114'
     | 'cd113'
+    | 'cd114'
+    | 'cd115'
+    | 'cd116'
+    | 'cd117'
+    | 'cd118'
+    | 'cd119'
     | 'stateleg'
+    | 'stateleg-next'
     | 'school'
-    | 'timezone'
     | 'census'
     | 'census2000'
     | 'census2010'
@@ -383,14 +397,22 @@ declare module 'geocodio-library-node' {
     | 'census2018'
     | 'census2019'
     | 'census2020'
-    | 'provriding'
-    | 'riding'
-    | 'zip4'
+    | 'census2021'
+    | 'census2022'
+    | 'census2023'
+    | 'census2024'
     | 'acs-demographics'
     | 'acs-economics'
     | 'acs-families'
     | 'acs-housing'
-    | 'acs-social';
+    | 'acs-social'
+    | 'zip4'
+    | 'ffiec'
+    | 'riding'
+    | 'provriding'
+    | 'provriding-next'
+    | 'statcan'
+    | 'timezone';
 
   export interface SingleGeocodeResponse {
     input: {
