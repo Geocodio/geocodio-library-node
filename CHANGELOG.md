@@ -2,6 +2,10 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 1.15.0 - 2026-03-12
+
+- Updated default API version to v1.11
+
 ## 1.14.0 - 2026-02-24
 
 - Added support for Geocodio API v1.10
