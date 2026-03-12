@@ -70,7 +70,10 @@
     "test": "jest",
     "toc": "markdown-toc README.md -i"
   },
-  "repository": "Geocodio/geocodio-library-node",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Geocodio/geocodio-library-node.git"
+  },
   "jest": {
     "moduleNameMapper": {
       "axios": "<rootDir>/node_modules/axios/dist/node/axios.cjs"
