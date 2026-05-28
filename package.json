@@ -1,6 +1,6 @@
 {
   "name": "geocodio-library-node",
-  "version": "1.15.0",
+  "version": "1.15.1",
   "description": "geocod.io geocoding API library",
   "homepage": "https://github.com/Geocodio/geocodio-library-node",
   "author": {
@@ -84,5 +84,8 @@
   "dependencies": {
     "axios": "^1.7.4",
     "form-data": "^4.0.0"
+  },
+  "overrides": {
+    "tmp": "^0.2.4"
   }
 }

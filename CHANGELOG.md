@@ -2,6 +2,10 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 1.15.1 - 2026-05-28
+
+- **Security:** Patched transitive `tmp` dependency to `^0.2.4` to address path traversal vulnerability (CVE-2026-44705). Dev-only dependency; no runtime impact.
+
 ## 1.15.0 - 2026-03-12
 
 - Updated default API version to v1.11
