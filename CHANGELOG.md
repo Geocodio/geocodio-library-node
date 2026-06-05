@@ -2,6 +2,13 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 2.0.0 - 2026-06-05
+
+- **Breaking:** Migrated to Geocodio API v2 (base URL version prefix is now `v2`).
+- **Breaking:** The top-level `input` object has been removed from `/geocode` and `/reverse` responses. The parsed input address is now available in `results[].address_components`.
+- **Breaking:** Renamed address component keys in `address_components` and `address_components_secondary`: `zip` → `postal_code`, `state` → `state_province`, `secondaryunit` → `unit_type`, `secondarynumber` → `unit_number`.
+- Added `state_province` as an accepted address input component (the old `state` field continues to work for backwards compatibility).
+
 ## 1.11.0 - 2025-05-21
 
 - Enhanced TypeScript type definitions

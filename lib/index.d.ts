@@ -178,18 +178,23 @@ declare module 'geocodio-library-node' {
     street?: string;
     suffix?: string;
     postdirectional?: string;
-    secondaryunit?: string;
-    secondarynumber?: string;
+    unit_type?: string;
+    unit_number?: string;
     formatted_street?: string;
     city?: string;
     county?: string;
-    state?: string;
-    zip?: string;
+    state_province?: string;
+    postal_code?: string;
     country?: string;
-    postal_code?: string; // Alternative to zip used in some API calls
   }
 
-  export type AddressInputComponents = Pick<AddressComponents, "street" | "city" | "county" | "state" | "postal_code" | "country">
+  // Address input components accepted by the geocode endpoint.
+  // `state` is still accepted by the API for backwards compatibility,
+  // but `state_province` is the v2 field name.
+  export type AddressInputComponents =
+    Pick<AddressComponents, "street" | "city" | "county" | "state_province" | "postal_code" | "country"> & {
+      state?: string;
+    }
 
   export type GeocodeAccuracyType =
     | 'rooftop'
@@ -393,10 +398,6 @@ declare module 'geocodio-library-node' {
     | 'acs-social';
 
   export interface SingleGeocodeResponse {
-    input: {
-      address_components: AddressComponents;
-      formatted_address: string;
-    };
     results: GeocodedAddress[];
     _warnings?: string[];
   }
