@@ -54,19 +54,6 @@ geocoder
   })
     /*
     response => {
-      "input": {
-        "address_components": {
-          "number": "1109",
-          "predirectional": "N",
-          "street": "Highland",
-          "suffix": "St",
-          "formatted_street": "N Highland St",
-          "city": "Arlington",
-          "state": "VA",
-          "country": "US"
-        },
-        "formatted_address": "1109 N Highland St, Arlington, VA"
-      },
       "results": [
         {
           "address_components": {
@@ -77,8 +64,8 @@ geocoder
             "formatted_street": "N Highland St",
             "city": "Arlington",
             "county": "Arlington County",
-            "state": "VA",
-            "zip": "22201",
+            "state_province": "VA",
+            "postal_code": "22201",
             "country": "US"
           },
           "formatted_address": "1109 N Highland St, Arlington, VA 22201",
@@ -99,8 +86,8 @@ geocoder
             "formatted_street": "N Highland St",
             "city": "Arlington",
             "county": "Arlington County",
-            "state": "VA",
-            "zip": "22201",
+            "state_province": "VA",
+            "postal_code": "22201",
             "country": "US"
           },
           "formatted_address": "1109 N Highland St, Arlington, VA 22201",
@@ -196,7 +183,7 @@ For forward geocoding requests it is possible to supply [individual address comp
 geocoder.geocode({
       street: '1109 N Highland St',
       city: 'Arlington',
-      state: 'VA',
+      state_province: 'VA',
       postal_code: '22201'
   })
   .then(response => { ... })
@@ -206,12 +193,12 @@ geocoder.geocode([
       {
           street: '1109 N Highland St',
           city: 'Arlington',
-          state: 'VA'
+          state_province: 'VA'
       },
       {
           street: '525 University Ave',
           city: 'Toronto',
-          state: 'ON',
+          state_province: 'ON',
           country: 'Canada',
       },
   ])
