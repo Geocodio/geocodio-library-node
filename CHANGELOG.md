@@ -9,6 +9,18 @@ All notable changes to `geocodio-library-node` will be documented in this file
 - **Breaking:** Renamed address component keys in `address_components` and `address_components_secondary`: `zip` → `postal_code`, `state` → `state_province`, `secondaryunit` → `unit_type`, `secondarynumber` → `unit_number`.
 - Added `state_province` as an accepted address input component (the old `state` field continues to work for backwards compatibility).
 
+## 1.15.1 - 2026-05-28
+
+- **Security:** Patched transitive `tmp` dependency to `^0.2.4` to address path traversal vulnerability (CVE-2026-44705). Dev-only dependency; no runtime impact.
+
+## 1.15.0 - 2026-03-12
+
+- Updated default API version to v1.11
+
+## 1.14.0 - 2026-02-24
+
+- Added support for Geocodio API v1.10
+
 ## 1.11.0 - 2025-05-21
 
 - Enhanced TypeScript type definitions
