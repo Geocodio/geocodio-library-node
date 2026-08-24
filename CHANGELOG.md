@@ -2,6 +2,10 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## Unreleased
+
+- Added United Kingdom data append support to the TypeScript definitions: the `uk-westminster`, `uk-westminster-next`, `uk-devolved`, `uk-devolved-next`, `uk-local`, and `uk-local-next` field options, a `UKLegislativeDistrict` interface, and `uk_westminster`/`uk_devolved`/`uk_local` on the `Fields` response type. (No runtime changes — the client already passed these fields through.)
+
 ## 2.0.0 - 2026-06-05
 
 - **Breaking:** Migrated to Geocodio API v2 (base URL version prefix is now `v2`).

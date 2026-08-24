@@ -346,6 +346,15 @@ declare module 'geocodio-library-node' {
     exact_match: boolean;
   }
 
+  export interface UKLegislativeDistrict {
+    district_type: string;
+    gss_code: string;
+    ocd_id: string;
+    name: string;
+    is_upcoming_district: boolean;
+    source: string;
+  }
+
   export interface Fields {
     congressional_districts?: CongressionalDistrict[];
     state_legislative_districts?: StateLegislativeDistricts;
@@ -353,6 +362,9 @@ declare module 'geocodio-library-node' {
     timezone?: Timezone;
     census?: Census;
     zip4?: Zip4;
+    uk_westminster?: UKLegislativeDistrict[];
+    uk_devolved?: UKLegislativeDistrict[];
+    uk_local?: UKLegislativeDistrict[];
     [key: string]: unknown;
   }
 
@@ -390,6 +402,12 @@ declare module 'geocodio-library-node' {
     | 'census2020'
     | 'provriding'
     | 'riding'
+    | 'uk-westminster'
+    | 'uk-westminster-next'
+    | 'uk-devolved'
+    | 'uk-devolved-next'
+    | 'uk-local'
+    | 'uk-local-next'
     | 'zip4'
     | 'acs-demographics'
     | 'acs-economics'
