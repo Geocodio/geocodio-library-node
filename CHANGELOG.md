@@ -4,6 +4,11 @@ All notable changes to `geocodio-library-node` will be documented in this file
 
 ## Unreleased
 
+- Documented the API's `_warnings` response key, including where warnings appear on single, batch, per-result, list and distance matrix job responses.
+- Added `_warnings?: Warnings` to every response type that can carry it: individual geocoding results (`GeocodedAddress`), list responses and distance matrix job responses. Batch items already inherited it from `SingleGeocodeResponse`/`ReverseGeocodeResponse`.
+- Added `ListStatusResponse`, `ListsResponse` and `DeleteResponse` types; `list.status()`, `list.all()`, `list.delete()` and `deleteDistanceMatrixJob()` previously resolved to `unknown`/`void`.
+- Errors thrown for API error responses now carry a `warnings` array (typed via the new `GeocodioError` interface), exposing warnings that were previously discarded.
+- Added tests locking in `_warnings` passthrough on every response shape.
 - Added United Kingdom data append support to the TypeScript definitions: the `uk-westminster`, `uk-westminster-next`, `uk-devolved`, `uk-devolved-next`, `uk-local`, and `uk-local-next` field options, a `UKLegislativeDistrict` interface, and `uk_westminster`/`uk_devolved`/`uk_local` on the `Fields` response type. (No runtime changes — the client already passed these fields through.)
 
 ## 2.0.0 - 2026-06-05

@@ -38,6 +38,17 @@ declare module 'geocodio-library-node' {
     toObject(): { lat: number; lng: number; id?: string };
   }
 
+  // Non-fatal advisories the API returns under the `_warnings` key, e.g. an
+  // unrecognized field name, a superseded API version, or a skipped append.
+  // The key is only present when at least one warning was raised.
+  export type Warnings = string[];
+
+  // Errors thrown for non-2xx API responses
+  export interface GeocodioError extends Error {
+    code: number;
+    warnings: Warnings;
+  }
+
   // Coordinate input types (accept multiple formats)
   export type CoordinateInput =
     | Coordinate
@@ -101,6 +112,7 @@ declare module 'geocodio-library-node' {
     origins_count: number;
     destinations_count: number;
     total_calculations: number;
+    _warnings?: Warnings;
   }
 
   export interface DistanceJobStatusResponse {
@@ -114,6 +126,7 @@ declare module 'geocodio-library-node' {
       total_calculations: number;
       calculations_completed: number;
     };
+    _warnings?: Warnings;
   }
 
   export interface DistanceJobsListResponse {
@@ -138,6 +151,7 @@ declare module 'geocodio-library-node' {
     prev_page_url: string | null;
     to: number;
     total: number;
+    _warnings?: Warnings;
   }
 
   export interface DistanceJobOptions extends DistanceOptions {
@@ -376,6 +390,7 @@ declare module 'geocodio-library-node' {
     accuracy_type: GeocodeAccuracyType;
     source?: string;
     fields?: Fields;
+    _warnings?: Warnings;
   }
 
   export type FieldOption =
@@ -417,7 +432,7 @@ declare module 'geocodio-library-node' {
 
   export interface SingleGeocodeResponse {
     results: GeocodedAddress[];
-    _warnings?: string[];
+    _warnings?: Warnings;
   }
 
   export interface BatchGeocodeResponse<Q extends string | AddressInputComponents, T extends Array<Q> | Record<string, Q>> {
@@ -431,7 +446,7 @@ declare module 'geocodio-library-node' {
 
   export interface ReverseGeocodeResponse {
     results: GeocodedAddress[];
-    _warnings?: string[];
+    _warnings?: Warnings;
   }
 
   export interface BatchReverseGeocodeResponse<Q extends string | [number, number], T extends Array<Q> | Record<string, Q>> {
@@ -449,6 +464,24 @@ declare module 'geocodio-library-node' {
     file: {
       filename: string;
     };
+    _warnings?: Warnings;
+  }
+
+  export interface ListStatusResponse {
+    id: number;
+    _warnings?: Warnings;
+    [key: string]: unknown;
+  }
+
+  export interface ListsResponse {
+    data: unknown[];
+    _warnings?: Warnings;
+    [key: string]: unknown;
+  }
+
+  export interface DeleteResponse {
+    success: boolean;
+    _warnings?: Warnings;
   }
 
   export default class Geocodio {
@@ -508,16 +541,16 @@ declare module 'geocodio-library-node' {
 
     downloadDistanceMatrixJob(id: string | number, filePath: string): Promise<void>;
 
-    deleteDistanceMatrixJob(id: string | number): Promise<void>;
+    deleteDistanceMatrixJob(id: string | number): Promise<DeleteResponse>;
 
     // List API
     list: {
       create(filename: string, direction: string, format: string, callback: string): Promise<ListResponse>;
-      status(listId: number): Promise<unknown>;
-      all(): Promise<unknown>;
+      status(listId: number): Promise<ListStatusResponse>;
+      all(): Promise<ListsResponse>;
       download(listId: number, output: string): Promise<unknown>;
-      delete(listId: number): Promise<unknown>;
-      deleteList(listId: number): Promise<unknown>; // Alias for delete
+      delete(listId: number): Promise<DeleteResponse>;
+      deleteList(listId: number): Promise<DeleteResponse>; // Alias for delete
     };
   }
 }
