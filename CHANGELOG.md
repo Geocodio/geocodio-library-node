@@ -2,7 +2,7 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
-## Unreleased
+## 2.2.0 - 2026-10-06
 
 - Documented the API's `_warnings` response key, including where warnings appear on single, batch, per-result, list and distance matrix job responses.
 - Added `_warnings?: Warnings` to every response type that can carry it: individual geocoding results (`GeocodedAddress`), list responses and distance matrix job responses. Batch items already inherited it from `SingleGeocodeResponse`/`ReverseGeocodeResponse`.
