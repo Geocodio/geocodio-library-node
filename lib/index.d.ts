@@ -22,6 +22,12 @@ declare module 'geocodio-library-node' {
     Desc = 'desc'
   }
 
+  // Distance matrix only: Pairs measures origin i against destination i only
+  export enum DistanceCalculationType {
+    Matrix = 'matrix',
+    Pairs = 'pairs'
+  }
+
   // Coordinate class for distance calculations
   export class Coordinate {
     readonly lat: number;
@@ -102,6 +108,13 @@ declare module 'geocodio-library-node' {
     sortOrder?: DistanceSortOrder | 'asc' | 'desc';
   }
 
+  // Distance matrix options (POST /distance-matrix and /distance-jobs)
+  export interface DistanceMatrixOptions extends DistanceOptions {
+    // "pairs" requires equal-length origins and destinations and does not
+    // support the maxResults/maxDistance/maxDuration/minDistance/minDuration filters
+    calculationType?: DistanceCalculationType | 'matrix' | 'pairs';
+  }
+
   // Distance Job Types
   export interface DistanceJobResponse {
     id: number;
@@ -112,6 +125,7 @@ declare module 'geocodio-library-node' {
     origins_count: number;
     destinations_count: number;
     total_calculations: number;
+    calculation_type?: 'matrix' | 'pairs';
     _warnings?: Warnings;
   }
 
@@ -125,6 +139,7 @@ declare module 'geocodio-library-node' {
       download_url?: string;
       total_calculations: number;
       calculations_completed: number;
+      calculation_type?: 'matrix' | 'pairs';
     };
     _warnings?: Warnings;
   }
@@ -140,6 +155,7 @@ declare module 'geocodio-library-node' {
       total_calculations: number;
       calculations_completed: number;
       created_at: string;
+      calculation_type?: 'matrix' | 'pairs';
     }>;
     first_page_url: string;
     from: number;
@@ -154,7 +170,7 @@ declare module 'geocodio-library-node' {
     _warnings?: Warnings;
   }
 
-  export interface DistanceJobOptions extends DistanceOptions {
+  export interface DistanceJobOptions extends DistanceMatrixOptions {
     callbackUrl?: string;
   }
 
@@ -522,7 +538,7 @@ declare module 'geocodio-library-node' {
     distanceMatrix(
       origins: CoordinateInput[],
       destinations: CoordinateInput[],
-      options?: DistanceOptions
+      options?: DistanceMatrixOptions
     ): Promise<DistanceMatrixResponse>;
 
     // Async Distance Matrix Job methods
