@@ -321,7 +321,8 @@ const {
   DistanceMode,
   DistanceUnits,
   DistanceOrderBy,
-  DistanceSortOrder
+  DistanceSortOrder,
+  DistanceCalculationType
 } = require('geocodio-library-node');
 
 // Available modes
@@ -339,6 +340,10 @@ DistanceOrderBy.Duration
 
 DistanceSortOrder.Asc      // Default
 DistanceSortOrder.Desc
+
+// Calculation type (distance matrix and distance matrix jobs only)
+DistanceCalculationType.Matrix  // Default - every origin × every destination
+DistanceCalculationType.Pairs   // Origin i to destination i only
 ```
 
 > **Note:** The default mode is `straightline` (great-circle distance). Use `DistanceMode.Driving` if you need road network routing with duration estimates.
@@ -567,7 +572,18 @@ const destinations = [
 
 geocoder.distanceMatrix(origins, destinations)
   .then(response => { ... });
+
+// One-to-one pairs: origin i is measured against destination i only,
+// so each result has a single destination
+geocoder.distanceMatrix(
+    ['38.8977,-77.0365,home', '38.886672,-77.094735,office'],
+    ['38.9072,-77.0369,capitol', '38.8814,-77.0916,pentagon'],
+    { calculationType: DistanceCalculationType.Pairs }
+  )
+  .then(response => { ... });
 ```
+
+> **Note:** With `DistanceCalculationType.Pairs`, origins and destinations must be the same length, and the `maxResults`, `maxDistance`, `maxDuration`, `minDistance` and `minDuration` filters are not supported. The API returns a 422 error otherwise.
 
 #### Nearest mode (find closest destinations)
 
@@ -649,6 +665,15 @@ geocoder.createDistanceMatrixJob(
     12345,       // Origins list ID
     67890,       // Destinations list ID
     { mode: DistanceMode.Straightline }
+  )
+  .then(response => { ... });
+
+// One-to-one pairs instead of a full matrix
+geocoder.createDistanceMatrixJob(
+    'Commutes',
+    ['38.8977,-77.0365,home', '38.886672,-77.094735,office'],
+    ['38.9072,-77.0369,capitol', '38.8814,-77.0916,pentagon'],
+    { calculationType: DistanceCalculationType.Pairs }
   )
   .then(response => { ... });
 
