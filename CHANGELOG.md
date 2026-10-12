@@ -2,6 +2,10 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
+## 2.3.0 - 2026-10-12
+
+- Added a `calculationType` option to `distanceMatrix()` and `createDistanceMatrixJob()`, with a new `DistanceCalculationType` enum (`Matrix`, `Pairs`). `Pairs` measures origin i against destination i only, instead of every origin against every destination. Added the `DistanceMatrixOptions` type and an optional `calculation_type` field on the distance matrix job response types.
+
 ## 2.2.0 - 2026-10-06
 
 - Documented the API's `_warnings` response key, including where warnings appear on single, batch, per-result, list and distance matrix job responses.
