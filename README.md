@@ -1,5 +1,5 @@
 # geocod.io Node library [![NPM version][npm-image]][npm-url]
-> Library for performing forward and reverse address geocoding for addresses or coordinates in the US, Canada, Mexico, the UK, Australia and New Zealand, with support for distance calculations.
+> Library for performing forward and reverse address geocoding for addresses or coordinates in the US, Canada, Mexico, the UK, Australia, and New Zealand, with support for distance calculations.
 
 <!-- toc -->
 
