@@ -221,7 +221,7 @@ geocoder.geocode([
       {
           street: '55 Cable St',
           city: 'Wellington',
-          postal_code: '6021',
+          postal_code: '6011',
           country: 'New Zealand',
       },
   ])
