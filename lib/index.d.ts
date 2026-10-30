@@ -409,13 +409,36 @@ declare module 'geocodio-library-node' {
     _warnings?: Warnings;
   }
 
+  export type ACSCategory = 'demographics' | 'economics' | 'families' | 'housing' | 'social';
+
+  export type ACSGeography =
+    | 'block_group'
+    | 'tract'
+    | 'zcta'
+    | 'place'
+    | 'msa'
+    | 'county'
+    | 'county_subdivision'
+    | 'state'
+    | 'division'
+    | 'region'
+    | 'nation';
+
   export type FieldOption =
     | 'cd'
+    | 'cd+legislators'
+    | 'cd120'
+    | 'cd119'
+    | 'cd118'
+    | 'cd117'
     | 'cd116'
     | 'cd115'
     | 'cd114'
     | 'cd113'
     | 'stateleg'
+    | 'stateleg-next'
+    | 'stateleg+legislators'
+    | 'stateleg-next+legislators'
     | 'school'
     | 'timezone'
     | 'census'
@@ -431,20 +454,36 @@ declare module 'geocodio-library-node' {
     | 'census2018'
     | 'census2019'
     | 'census2020'
-    | 'provriding'
+    | 'census2021'
+    | 'census2022'
+    | 'census2023'
+    | 'census2024'
+    | 'census2025'
+    | 'ffiec'
+    | 'zip4'
+    | `acs-${ACSCategory}`
+    | `acs-${ACSCategory}-${ACSGeography}`
     | 'riding'
+    | 'riding-next'
+    | 'provriding'
+    | 'provriding-next'
+    | 'statcan'
     | 'uk-westminster'
     | 'uk-westminster-next'
     | 'uk-devolved'
     | 'uk-devolved-next'
     | 'uk-local'
     | 'uk-local-next'
-    | 'zip4'
-    | 'acs-demographics'
-    | 'acs-economics'
-    | 'acs-families'
-    | 'acs-housing'
-    | 'acs-social';
+    | 'uk-census'
+    | 'au-census'
+    | 'au-census2021'
+    | 'au-demographics'
+    | 'au-housing'
+    | 'au-income'
+    | 'au-federal-electorate'
+    | 'au-federal-electorate-next'
+    | 'au-state-electorate'
+    | 'gazetteer';
 
   export interface SingleGeocodeResponse {
     results: GeocodedAddress[];
