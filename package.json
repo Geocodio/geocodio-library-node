@@ -1,6 +1,6 @@
 {
   "name": "geocodio-library-node",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "geocod.io geocoding API library",
   "homepage": "https://github.com/Geocodio/geocodio-library-node",
   "author": {
