@@ -2,9 +2,12 @@
 
 All notable changes to `geocodio-library-node` will be documented in this file
 
-## Unreleased
+## 2.4.0 - 2026-11-17
 
 - Brought the `FieldOption` type in line with every field the API accepts. Added Australia appends (`au-census`, `au-census2021`, `au-demographics`, `au-housing`, `au-income`, `au-federal-electorate`, `au-federal-electorate-next`, `au-state-electorate`), plus `uk-census`, `statcan`, `ffiec`, `gazetteer`, `riding-next`, `provriding-next`, `stateleg-next`, the `+legislators` variants of `cd` and `stateleg`, `cd117`–`cd120`, `census2021`–`census2025`, and ACS geography variants such as `acs-economics-tract` (via the new `ACSCategory` and `ACSGeography` types). (No runtime changes — the client already passed these fields through.)
+- The User-Agent header now reports the installed version from `package.json`.
+- README examples include Australia and New Zealand addresses and the Australian field appends.
+- 2.3.0 was tagged but never published to npm. This release includes its distance `calculationType` option.
 
 ## 2.3.0 - 2026-10-12
 
